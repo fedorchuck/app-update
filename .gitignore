@@ -1,0 +1,15 @@
+/gradle/
+/build/
+/target/
+/bin/
+/classes/
+/out/
+.springBeans
+.settings
+.project
+.classpath
+.gradle
+.iml
+.idea/
+/*.iml
+/gradle.properties
