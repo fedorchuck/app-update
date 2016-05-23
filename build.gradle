@@ -1,0 +1,24 @@
+
+plugins {
+    id 'java'
+}
+
+group = 'com.github.fedorchuck'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    testCompile "junit:junit-dep:4.11"
+}
+
+repositories {
+    mavenCentral()
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.12'
+}
+
+//tasks['test'].enabled=false;
