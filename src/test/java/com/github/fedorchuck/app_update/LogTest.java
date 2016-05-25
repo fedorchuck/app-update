@@ -16,14 +16,32 @@
 
 package com.github.fedorchuck.app_update;
 
+import com.github.fedorchuck.app_update.log.Level;
+import com.github.fedorchuck.app_update.log.Log;
+import org.junit.Test;
+
 import java.io.IOException;
-import java.util.List;
 
-public interface IDestroy {
+import static org.junit.Assert.*;
 
-    void killByListId(List<Integer> pid) throws IOException;
+public class LogTest {
 
-    List<Integer> getListProcessIdentifier(String processNameToKill) throws IOException;
+    @Test
+    public void test01() {
+        try {
+            Log.write(this.getClass(), new IOException(), Level.INFO);
+        } catch (Throwable e) {
+            fail();
+        }
+    }
 
+    @Test
+    public void test02() {
+        try {
+            Log.write(this.getClass(), new IOException(),"test", Level.DEBUG);
+        } catch (Throwable e) {
+            fail();
+        }
+    }
 
 }

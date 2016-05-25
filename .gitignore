@@ -4,6 +4,7 @@
 /bin/
 /classes/
 /out/
+/log/
 .springBeans
 .settings
 .project
