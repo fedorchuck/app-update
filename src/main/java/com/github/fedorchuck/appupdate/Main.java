@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.github.fedorchuck.app_update;
+package com.github.fedorchuck.appupdate;
 
-import com.github.fedorchuck.app_update.destroy.IProcessDestroyer;
-import com.github.fedorchuck.app_update.destroy.impl.LinuxProcessDestroyer;
-import com.github.fedorchuck.app_update.destroy.impl.WindowsProcessDestroyer;
+import com.github.fedorchuck.appupdate.destroy.IProcessDestroyer;
+import com.github.fedorchuck.appupdate.destroy.impl.LinuxProcessDestroyer;
+import com.github.fedorchuck.appupdate.destroy.impl.WindowsProcessDestroyer;
 
 import java.io.IOException;
 

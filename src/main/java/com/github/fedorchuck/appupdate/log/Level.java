@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.fedorchuck.app_update.log;
+package com.github.fedorchuck.appupdate.log;
 
 @SuppressWarnings("unused")
 public enum Level {

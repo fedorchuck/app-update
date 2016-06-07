@@ -14,34 +14,17 @@
  * limitations under the License.
  */
 
-package com.github.fedorchuck.app_update;
-
-import com.github.fedorchuck.app_update.log.Level;
-import com.github.fedorchuck.app_update.log.Log;
-import org.junit.Test;
+package com.github.fedorchuck.appupdate.destroy;
 
 import java.io.IOException;
+import java.util.List;
 
-import static org.junit.Assert.*;
+public interface IProcessDestroyer {
 
-public class LogTest {
+    void killByIdList(List<Integer> pid) throws IOException;
 
-    @Test
-    public void test01() {
-        try {
-            Log.write(this.getClass(), new IOException(), Level.INFO);
-        } catch (Throwable e) {
-            fail();
-        }
-    }
+    List<Integer> getProcessIdentifierList(String processNameToKill) throws IOException;
 
-    @Test
-    public void test02() {
-        try {
-            Log.write(this.getClass(), new IOException(),"test", Level.DEBUG);
-        } catch (Throwable e) {
-            fail();
-        }
-    }
+    void killById(int pid) throws IOException;
 
 }

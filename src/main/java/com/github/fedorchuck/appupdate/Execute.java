@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.github.fedorchuck.app_update;
+package com.github.fedorchuck.appupdate;
 
-import com.github.fedorchuck.app_update.log.Level;
-import com.github.fedorchuck.app_update.log.Log;
+import com.github.fedorchuck.appupdate.log.Level;
+import com.github.fedorchuck.appupdate.log.Log;
 
 import java.io.BufferedReader;
 import java.io.IOException;

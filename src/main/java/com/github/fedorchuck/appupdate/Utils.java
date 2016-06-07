@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.fedorchuck.app_update;
+package com.github.fedorchuck.appupdate;
 
 import java.io.BufferedReader;
 import java.io.IOException;

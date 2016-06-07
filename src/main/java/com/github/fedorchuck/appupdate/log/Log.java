@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.fedorchuck.app_update.log;
+package com.github.fedorchuck.appupdate.log;
 
 import java.io.*;
 import java.util.Arrays;
@@ -47,12 +47,13 @@ public class Log {
     private void writeFile(String content, Level level) {
         write(content,new File("log/"+level));
         write(content,new File("log/ALL"));
+        if (level == Level.FATAL)
+            System.exit(1);
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     private void write(String content, File file) {
 
-        System.out.println(file.getAbsolutePath());
         try {
             System.out.println(file.getCanonicalPath());
 

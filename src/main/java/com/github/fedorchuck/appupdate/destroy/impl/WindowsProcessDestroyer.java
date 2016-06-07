@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-package com.github.fedorchuck.app_update.destroy.impl;
+package com.github.fedorchuck.appupdate.destroy.impl;
 
-import com.github.fedorchuck.app_update.destroy.IProcessDestroyer;
-import com.github.fedorchuck.app_update.Utils;
-import com.github.fedorchuck.app_update.log.Level;
-import com.github.fedorchuck.app_update.log.Log;
+import com.github.fedorchuck.appupdate.destroy.IProcessDestroyer;
+import com.github.fedorchuck.appupdate.Utils;
+import com.github.fedorchuck.appupdate.log.Level;
+import com.github.fedorchuck.appupdate.log.Log;
 
 import java.io.IOException;
 import java.util.List;
 
-public class LinuxProcessDestroyer implements IProcessDestroyer {
+public class WindowsProcessDestroyer implements IProcessDestroyer {
     private Runtime rt = Runtime.getRuntime();
     private Log log = new Log(this.getClass());
 
@@ -38,7 +38,8 @@ public class LinuxProcessDestroyer implements IProcessDestroyer {
     public List<Integer> getProcessIdentifierList(String processNameToKill) throws IOException {
         log.write("try get list process with name: " + processNameToKill, Level.INFO);
 
-        Process process = rt.exec("ps -e");
+        Process process = rt.exec
+                (System.getenv("windir") +"\\system32\\"+"tasklist.exe");
 
         return Utils.read(process, processNameToKill);
     }
@@ -46,6 +47,6 @@ public class LinuxProcessDestroyer implements IProcessDestroyer {
     @Override
     public void killById(int pid) throws IOException {
         log.write("try to kill process: " + pid, Level.INFO);
-        rt.exec("kill -9 " + pid);
+        rt.exec("taskkill " + pid);
     }
 }
