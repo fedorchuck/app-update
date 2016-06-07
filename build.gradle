@@ -10,6 +10,7 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
+    compile 'com.google.code.gson:gson:2.6.2'
     testCompile "junit:junit-dep:4.11"
 }
 

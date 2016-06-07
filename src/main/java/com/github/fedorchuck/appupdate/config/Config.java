@@ -35,7 +35,7 @@ public class Config {
         try {
             sheet = readFile(path);
         } catch (FileNotFoundException e) {
-            log.write(e,"config not foud.",Level.FATAL);
+            log.write(e,"config not found.",Level.FATAL);
         } catch (IOException e) {
             e.printStackTrace();
             log.write(e,"problem with reading config file.",Level.FATAL);
@@ -81,6 +81,7 @@ public class Config {
                 res.put(key,value);
         }
 
+        log.write("config was received: " + path, Level.INFO);
         return res;
     }
 
