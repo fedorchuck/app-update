@@ -48,7 +48,7 @@ public class MainTest {
         }
 
         Thread.sleep(5000);
-        destroy.killByListId(destroy.getListProcessIdentifier(processName));
+        destroy.killByIdList(destroy.getProcessIdentifierList(processName));
     }
 
 //    @Test   //execute

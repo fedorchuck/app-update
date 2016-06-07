@@ -50,7 +50,7 @@ public class Main {
                 destroy = new LinuxProcessDestroyer();
             }
 
-            destroy.killByListId(destroy.getListProcessIdentifier(processNameToKill));
+            destroy.killByIdList(destroy.getProcessIdentifierList(processNameToKill));
         }
     }
 }

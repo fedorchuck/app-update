@@ -21,31 +21,36 @@ import java.util.Arrays;
 import java.util.Date;
 
 public class Log {
+    private Class aClass;
 
-    public static void write(Class c, Throwable throwable, String message, Level level) {
-        write(
-        '\t'+new Date().toString()+"\t["+c.getCanonicalName()+"]\t[" + level +"]\n"
+    public Log(Class aClass) {
+        this.aClass = aClass;
+    }
+
+    public void write(Throwable throwable, String message, Level level) {
+        writeFile(
+        '\t'+new Date().toString()+"\t["+this.aClass.getCanonicalName()+"]\t[" + level +"]\n"
         + "Info : " + message + "\n"
         + "StackTrace : " + Arrays.toString(throwable.getStackTrace()),level);
     }
 
-    public static void write(Class c, String message, Level level) {
-        write(
-        '\t'+new Date().toString()+"\t["+c.getCanonicalName()+"]\t[" + level +"]\n"
-        + "Info : " + message,level);
+    public void write(Throwable throwable, Level level) {
+        write(throwable,throwable.getMessage() + '\t' + throwable.getCause(), level);
     }
 
-    public static void write(Class c, Throwable throwable, Level level) {
-        write(c,throwable,throwable.getMessage() + '\t' + throwable.getCause(), level);
+    public void write(String message, Level level) {
+        writeFile(
+                '\t'+new Date().toString()+"\t["+this.aClass.getCanonicalName()+"]\t[" + level +"]\n"
+                        + "Info : " + message,level);
     }
 
-    private static void write(String content, Level level) {
+    private void writeFile(String content, Level level) {
         write(content,new File("log/"+level));
         write(content,new File("log/ALL"));
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    private static void write(String content, File file) {
+    private void write(String content, File file) {
 
         System.out.println(file.getAbsolutePath());
         try {

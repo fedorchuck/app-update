@@ -21,9 +21,10 @@ import java.util.List;
 
 public interface IProcessDestroyer {
 
-    void killByListId(List<Integer> pid) throws IOException;
+    void killByIdList(List<Integer> pid) throws IOException;
 
-    List<Integer> getListProcessIdentifier(String processNameToKill) throws IOException;
+    List<Integer> getProcessIdentifierList(String processNameToKill) throws IOException;
 
+    void killById(int pid) throws IOException;
 
 }

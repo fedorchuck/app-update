@@ -24,9 +24,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Execute {
+    private Log log = new Log(this.getClass());
+
     public void command(String command) {
-        //noinspection StringBufferMayBeStringBuilder
-        StringBuffer output = new StringBuffer();
+        log.write("try to execute: "+command,Level.INFO);
+        StringBuilder output = new StringBuilder();
 
         Process p;
         try {
@@ -41,10 +43,10 @@ public class Execute {
                 output.append(line).append("\n");
             }
 
-            Log.write(this.getClass(),null,output.toString(),Level.INFO);
+            log.write(output.toString(),Level.INFO);
         } catch (InterruptedException |
                 IOException e) {
-            Log.write(this.getClass(),e, Level.FATAL);
+            log.write(e, Level.FATAL);
         }
     }
 }
