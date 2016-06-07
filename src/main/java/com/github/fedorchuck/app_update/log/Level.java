@@ -16,10 +16,12 @@
 
 package com.github.fedorchuck.app_update.log;
 
+@SuppressWarnings("unused")
 public enum Level {
     INFO,
     DEBUG,
     WARN,
     ERROR,
     FATAL
+
 }

@@ -16,12 +16,12 @@
 
 package com.github.fedorchuck.app_update;
 
-import com.github.fedorchuck.app_update.impl.Execute;
+import com.github.fedorchuck.app_update.destroy.IProcessDestroyer;
+import com.github.fedorchuck.app_update.destroy.impl.LinuxProcessDestroyer;
+import com.github.fedorchuck.app_update.destroy.impl.WindowsProcessDestroyer;
 import org.junit.Test;
 
 import java.io.IOException;
-
-import static org.junit.Assert.*;
 
 public class MainTest {
     @Test   //arg help
@@ -34,14 +34,14 @@ public class MainTest {
         Process process;
         String processName;
 
-        IDestroy destroy;
+        IProcessDestroyer destroy;
         if (System.getProperty("os.name").toLowerCase().contains("windows")) {
-            destroy = new com.github.fedorchuck.app_update.impl.windows.Destroy();
+            destroy = new WindowsProcessDestroyer();
             processName = "calc";
             process = Runtime.getRuntime().exec(processName);
         }
         else {
-            destroy = new com.github.fedorchuck.app_update.impl.linux.Destroy();
+            destroy = new LinuxProcessDestroyer();
             processName = "gnome-calculator";//"slack";
             process = Runtime.getRuntime().exec(processName);
             processName = "gnome-calculato";//name MUST be less than 16 char!

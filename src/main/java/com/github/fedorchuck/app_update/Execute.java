@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.fedorchuck.app_update.impl;
+package com.github.fedorchuck.app_update;
 
 import com.github.fedorchuck.app_update.log.Level;
 import com.github.fedorchuck.app_update.log.Log;
@@ -25,6 +25,7 @@ import java.io.InputStreamReader;
 
 public class Execute {
     public void command(String command) {
+        //noinspection StringBufferMayBeStringBuilder
         StringBuffer output = new StringBuffer();
 
         Process p;
@@ -34,6 +35,7 @@ public class Execute {
             BufferedReader reader =
                     new BufferedReader(new InputStreamReader(p.getInputStream()));
 
+            //noinspection UnusedAssignment
             String line = "";
             while ((line = reader.readLine()) != null) {
                 output.append(line).append("\n");

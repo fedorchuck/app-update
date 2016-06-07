@@ -16,6 +16,10 @@
 
 package com.github.fedorchuck.app_update;
 
+import com.github.fedorchuck.app_update.destroy.IProcessDestroyer;
+import com.github.fedorchuck.app_update.destroy.impl.LinuxProcessDestroyer;
+import com.github.fedorchuck.app_update.destroy.impl.WindowsProcessDestroyer;
+
 import java.io.IOException;
 
 public class Main {
@@ -39,11 +43,11 @@ public class Main {
 
             Thread.sleep(killAfter * 1000);
 
-            IDestroy destroy;
+            IProcessDestroyer destroy;
             if (System.getProperty("os.name").toLowerCase().contains("windows")) {
-                destroy = new com.github.fedorchuck.app_update.impl.windows.Destroy();
+                destroy = new WindowsProcessDestroyer();
             } else {
-                destroy = new com.github.fedorchuck.app_update.impl.linux.Destroy();
+                destroy = new LinuxProcessDestroyer();
             }
 
             destroy.killByListId(destroy.getListProcessIdentifier(processNameToKill));

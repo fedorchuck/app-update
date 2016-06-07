@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package com.github.fedorchuck.app_update;
+package com.github.fedorchuck.app_update.destroy;
 
 import java.io.IOException;
 import java.util.List;
 
-public interface IDestroy {
+public interface IProcessDestroyer {
 
     void killByListId(List<Integer> pid) throws IOException;
 

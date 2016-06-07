@@ -29,6 +29,12 @@ public class Log {
         + "StackTrace : " + Arrays.toString(throwable.getStackTrace()),level);
     }
 
+    public static void write(Class c, String message, Level level) {
+        write(
+        '\t'+new Date().toString()+"\t["+c.getCanonicalName()+"]\t[" + level +"]\n"
+        + "Info : " + message,level);
+    }
+
     public static void write(Class c, Throwable throwable, Level level) {
         write(c,throwable,throwable.getMessage() + '\t' + throwable.getCause(), level);
     }
@@ -38,6 +44,7 @@ public class Log {
         write(content,new File("log/ALL"));
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     private static void write(String content, File file) {
 
         System.out.println(file.getAbsolutePath());
