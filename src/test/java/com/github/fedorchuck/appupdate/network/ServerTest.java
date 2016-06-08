@@ -17,16 +17,21 @@
 package com.github.fedorchuck.appupdate.network;
 
 import com.github.fedorchuck.appupdate.model.Response;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.*;
 
-import static org.junit.Assert.*;
+import java.io.File;
 
 public class ServerTest {
+    private static Server server = new Server();
+
+    @BeforeClass
+    public static void before(){
+        File trash = new File(server.getDownloadDirectory());
+        trash.delete();
+    }
 
     @Test
     public void get() throws Exception {
-        Server server = new Server();
         Response actual = server.get("http://localhost:8080/client?token=d19455ee-2c96-11e6-b67b-9e71128cae77&version=0.0.1");
         Response expected = new Response("d1945ce2-2c96-11e6-b67b-9e71128cae77","0.0.2","some url","OK","link to doc");
         Assert.assertEquals(expected,actual);
@@ -38,4 +43,43 @@ public class ServerTest {
         Assert.assertEquals(expected,actual);
     }
 
+    @Test
+    public void download() {
+        File actual = new File(server.getDownloadDirectory()+"newDist.zip");
+        if (actual.exists())
+            //noinspection ResultOfMethodCallIgnored
+            actual.delete();
+
+        server.download("https://www.dropbox.com/s/r3re0nhvkwgbt6z/font-awesome-4.6.2.zip?dl=1");
+
+        if (!actual.exists())
+            Assert.fail();
+        else
+            Assert.assertTrue("Downloaded",true);
+    }
+
+    @Test
+    public void completeServerTest() {
+        File actual = new File(server.getDownloadDirectory()+"newDist.zip");
+        if (actual.exists())
+            //noinspection ResultOfMethodCallIgnored
+            actual.delete();
+
+        Response response = server.get("http://localhost:8080/client?token=d1945ee0-2c96-11e6-b67b-9e71128cae77&version=0.0.3");
+        String url = response.getUrlToUpdate();
+        server.download(url);
+
+        if (!actual.exists())
+            Assert.fail();
+        else
+            Assert.assertTrue("Downloaded",true);
+    }
+
+    @AfterClass
+    public static void tearDown(){
+        File trash = new File(server.getDownloadDirectory()+"newDist.zip");
+        trash.deleteOnExit();
+        trash = new File(server.getDownloadDirectory());
+        trash.delete();
+    }
 }

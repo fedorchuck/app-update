@@ -17,7 +17,7 @@
 package com.github.fedorchuck.appupdate.destroy.impl;
 
 import com.github.fedorchuck.appupdate.destroy.IProcessDestroyer;
-import com.github.fedorchuck.appupdate.Utils;
+import com.github.fedorchuck.appupdate.destroy.Utils;
 import com.github.fedorchuck.appupdate.log.Level;
 import com.github.fedorchuck.appupdate.log.Log;
 

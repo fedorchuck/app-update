@@ -22,14 +22,20 @@ import com.github.fedorchuck.appupdate.model.Response;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
+import java.net.URL;
+import java.net.URLConnection;
 
 public class Server {
     private Log log = new Log(this.getClass());
+
+    private String downloadDirectory = new File(new File("").getAbsolutePath()).getParentFile().getAbsolutePath()+File.separator+"tmp"+File.separator;
+
+    public String getDownloadDirectory() {
+        return downloadDirectory;
+    }
 
     /**
      * @param url to server, example
@@ -61,5 +67,55 @@ public class Server {
             response = new Response("","","","check url","doc url");
         }
         return response;
+    }
+
+    public void download(String zipUrl){
+        log.write("Start download new dis. from: "+zipUrl,Level.INFO);
+        log.write("Destination directory: "+downloadDirectory,Level.INFO);
+
+        InputStream is = null;
+        FileOutputStream fos = null;
+
+        try {
+            URL url = new URL(zipUrl);
+            URLConnection urlCon = url.openConnection();
+
+            System.out.println(urlCon.getContentType());
+            log.write("content type: "+urlCon.getContentType(),Level.INFO);
+
+            File destDir = new File(downloadDirectory);
+            if (!destDir.exists()) {
+                //noinspection ResultOfMethodCallIgnored
+                destDir.mkdir();
+            }
+
+            is = urlCon.getInputStream();
+            fos = new FileOutputStream(downloadDirectory+"newDist.zip");
+
+            byte[] buffer = new byte[1000];
+            int bytesRead = is.read(buffer);
+
+            while (bytesRead > 0) {
+                fos.write(buffer, 0, bytesRead);
+                bytesRead = is.read(buffer);
+            }
+
+        } catch (FileNotFoundException e) {
+            log.write(e,Level.ERROR);
+        } catch (IOException e) {
+            log.write(e,Level.ERROR);
+            //TODO: delete destDir
+            log.write(e,Level.FATAL);
+        } finally {
+            try {
+                if (is != null) {
+                    is.close();
+                }
+                if (fos != null) {
+                    fos.close();
+                }
+            } catch (IOException ignored) {}
+        }
+
     }
 }
