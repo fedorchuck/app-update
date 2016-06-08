@@ -16,14 +16,41 @@
 
 package com.github.fedorchuck.appupdate.update;
 
-public class Data {
+import com.github.fedorchuck.appupdate.log.Log;
 
-    public void doBackup() {
+import static com.github.fedorchuck.appupdate.Variables.*;
+import static com.github.fedorchuck.appupdate.log.Level.*;
+
+import java.util.List;
+
+public class Data {
+    private Log log = new Log(this.getClass());
+
+    private List<String> pathFolders;
+
+    public void doBackup(List<String> pathFolders) {
+        log.write("Started do backup.", INFO);
+        this.pathFolders = pathFolders;
+        log.write("Destination directory: "+BACKUP_DIRECTORY, INFO);
+
+        Folder.replaceOrCreate(BACKUP_DIRECTORY);
+
+        for (String data : pathFolders){
+            //TODO: bags
+            Folder.move(data,BACKUP_DIRECTORY);
+        }
+
+        log.write("backup: OK", INFO);
+    }
+
+    public void cleanup() {
 
     }
 
     public void install(){
-
+        log.write("Started installing data from:"+DOWNLOAD_DIRECTORY,INFO);
+        Zip zip = new Zip();
+        zip.extract(DOWNLOAD_DIRECTORY+DOWNLOAD_DIST,HOME_DIRECTORY);
     }
 
     public void restoreBackup() {

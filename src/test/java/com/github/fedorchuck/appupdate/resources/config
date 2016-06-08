@@ -14,8 +14,7 @@
 # limitations under the License.
 #
 com.github.fedorchuck.appupdate.doNotDelete:
-/home/example/app/config
-/home/example/app/database
+/home/fedorchuck/Documents/projects/less
 # one second = 1000
 com.github.fedorchuck.appupdate.delay:
 9000

@@ -29,7 +29,9 @@ public class FolderTest {
 
     @Test
     public void getSubDir() {
-        List<String> expected = Arrays.asList("build", "gradle", "src", ".git", "log", ".gradle", ".idea");
+        List<String> expected = Arrays.asList(
+                "build", "gradle", "src", ".gitignore", ".git", "LICENSE", "Copyright",
+        "build.gradle", "README.md", "gradlew.bat", "log", ".gradle", "gradlew", "settings.gradle", ".idea");
         List<String> actual = Folder.getSubDir(new File("").getAbsolutePath());
         Assert.assertEquals(expected,actual);
     }

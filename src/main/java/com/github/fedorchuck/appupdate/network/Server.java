@@ -26,6 +26,7 @@ import java.io.*;
 import java.net.*;
 
 import static com.github.fedorchuck.appupdate.Variables.DOWNLOAD_DIRECTORY;
+import static com.github.fedorchuck.appupdate.Variables.DOWNLOAD_DIST;
 import static com.github.fedorchuck.appupdate.log.Level.*;
 
 public class Server {
@@ -77,18 +78,10 @@ public class Server {
             System.out.println(urlCon.getContentType());
             log.write("content type: "+urlCon.getContentType(),INFO);
 
-            File destDir = new File(DOWNLOAD_DIRECTORY);
-            if (!destDir.exists()) {
-                //noinspection ResultOfMethodCallIgnored
-                destDir.mkdir();
-            } else {
-                Folder.delete(DOWNLOAD_DIRECTORY);
-                //noinspection ResultOfMethodCallIgnored
-                destDir.mkdir();
-            }
+            Folder.replaceOrCreate(DOWNLOAD_DIRECTORY);
 
             is = urlCon.getInputStream();
-            fos = new FileOutputStream(DOWNLOAD_DIRECTORY +"newDist.zip");
+            fos = new FileOutputStream(DOWNLOAD_DIRECTORY+DOWNLOAD_DIST);
 
             byte[] buffer = new byte[1000];
             int bytesRead = is.read(buffer);

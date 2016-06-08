@@ -21,6 +21,10 @@ import java.util.List;
 
 public class Variables {
     public static List<String> LOG;
-    public static final String DOWNLOAD_DIRECTORY = new File(new File("").getAbsolutePath()).getParentFile().getAbsolutePath()+File.separator+"tmp"+File.separator;
-
+    public static final String HOME_DIRECTORY =
+            new File(new File("").getAbsolutePath()).getParentFile().getAbsolutePath()+File.separator;
+    public static final String HOME_DIRECTORY_APPUPDATER = HOME_DIRECTORY+"app-updater"+File.separator;
+    public static final String DOWNLOAD_DIRECTORY = HOME_DIRECTORY+"tmp"+File.separator;
+    public static String DOWNLOAD_DIST = "newDist.zip";
+    public static final String BACKUP_DIRECTORY = HOME_DIRECTORY+"backup"+File.separator;
 }

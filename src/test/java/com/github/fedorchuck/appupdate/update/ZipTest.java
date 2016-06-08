@@ -14,9 +14,12 @@
  * limitations under the License.
  */
 
-package com.github.fedorchuck.appupdate;
+package com.github.fedorchuck.appupdate.update;
 
-import com.github.fedorchuck.appupdate.update.Zip;
+import org.junit.Assert;
+import org.junit.Test;
+
+import static com.github.fedorchuck.appupdate.Variables.DOWNLOAD_DIST;
 
 public class ZipTest {
 
@@ -29,6 +32,19 @@ public class ZipTest {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    @Test
+    public void extract() throws Exception {
+        String zipFilePath = "/home/fedorchuck/Dropbox/font-awesome-4.6.2.zip";
+        String destDirectory = "/home/fedorchuck/Desktop/tmp";
+        Zip zip = new Zip();
+        try {
+            zip.extract(zipFilePath, destDirectory);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        Assert.assertEquals("font-awesome-4.6.2.",DOWNLOAD_DIST);
     }
 
 }

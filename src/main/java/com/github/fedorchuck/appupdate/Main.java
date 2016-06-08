@@ -27,6 +27,7 @@ import com.github.fedorchuck.appupdate.network.Server;
 import com.github.fedorchuck.appupdate.update.Data;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -36,6 +37,10 @@ public class Main {
     private static Log log = new Log(Main.class);
 
     public static void main(String[] args) throws IOException, InterruptedException {
+
+        args = new String[1];
+        args[0] = "/home/fedorchuck/Documents/projects/app-updater/src/test/java/com/github/fedorchuck/appupdate/resources/config";
+
         Config configFile = new Config();
         Map<String,List<String>> config = null;
 
@@ -74,7 +79,8 @@ public class Main {
             log.write("Bad data url.", FATAL);
 
         Data data = new Data();
-        data.doBackup();
+        data.doBackup(config.get("com.github.fedorchuck.appupdate.doNotDelete:"));
+        data.cleanup();
         data.install();
         data.restoreBackup();
 

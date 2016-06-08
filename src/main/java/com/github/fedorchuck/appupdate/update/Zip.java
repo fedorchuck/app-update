@@ -19,9 +19,12 @@ package com.github.fedorchuck.appupdate.update;
 import com.github.fedorchuck.appupdate.log.Log;
 
 import java.io.*;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import static com.github.fedorchuck.appupdate.Variables.DOWNLOAD_DIRECTORY;
+import static com.github.fedorchuck.appupdate.Variables.DOWNLOAD_DIST;
 import static com.github.fedorchuck.appupdate.log.Level.*;
 
 public class Zip {
@@ -31,11 +34,7 @@ public class Zip {
     public void extract(String zipFilePath, String destDirectory) {
         log.write("Try to unzip "+zipFilePath+" to "+destDirectory, INFO);
 
-        File destDir = new File(destDirectory);
-        if (!destDir.exists()) {
-            //noinspection ResultOfMethodCallIgnored
-            destDir.mkdir();
-        }
+        Folder.replaceOrCreate(destDirectory);
 
         ZipInputStream zipIn = null;
         try {
@@ -64,6 +63,8 @@ public class Zip {
             } catch (IOException ignored) {}
         }
 
+        changeDistName();
+
         log.write("Files was extracted successful.", INFO);
     }
 
@@ -76,5 +77,14 @@ public class Zip {
             bos.write(bytesIn, 0, read);
         }
         bos.close();
+    }
+
+    private void changeDistName(){
+        List<String> folders = Folder.getSubDir(DOWNLOAD_DIRECTORY);
+
+        if (folders.size()>2)
+            log.write("Could not indicate distribution name.", FATAL);
+
+        folders.stream().filter(folder -> folder.equals(DOWNLOAD_DIST)).forEach(folder -> DOWNLOAD_DIST = folder);
     }
 }
