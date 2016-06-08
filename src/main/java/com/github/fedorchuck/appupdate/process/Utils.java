@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.fedorchuck.appupdate.destroy;
+package com.github.fedorchuck.appupdate.process;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -42,5 +42,15 @@ public class Utils {
 
         input.close();
         return pid;
+    }
+
+    public static boolean isItString(String q){
+        try {
+            //noinspection ResultOfMethodCallIgnored
+            Integer.parseInt(q);
+            return true;
+        } catch (NumberFormatException e){
+            return false;
+        }
     }
 }

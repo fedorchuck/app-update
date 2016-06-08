@@ -16,32 +16,43 @@
 
 package com.github.fedorchuck.appupdate;
 
-import com.github.fedorchuck.appupdate.destroy.IProcessDestroyer;
-import com.github.fedorchuck.appupdate.destroy.impl.LinuxProcessDestroyer;
-import com.github.fedorchuck.appupdate.destroy.impl.WindowsProcessDestroyer;
+import com.github.fedorchuck.appupdate.process.destroy.IProcessDestroyer;
+import com.github.fedorchuck.appupdate.settings.Config;
+import com.github.fedorchuck.appupdate.process.Utils;
+import com.github.fedorchuck.appupdate.process.destroy.impl.LinuxProcessDestroyer;
+import com.github.fedorchuck.appupdate.process.destroy.impl.WindowsProcessDestroyer;
+import com.github.fedorchuck.appupdate.log.Log;
+import com.github.fedorchuck.appupdate.model.Response;
+import com.github.fedorchuck.appupdate.network.Server;
+import com.github.fedorchuck.appupdate.update.Data;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+
+import static com.github.fedorchuck.appupdate.log.Level.*;
 
 public class Main {
-    public static void main(String[] args) throws IOException, InterruptedException {
-        //System.out.println("arg: " + Arrays.toString(args));
+    private static Log log = new Log(Main.class);
 
-        String oldJar;//way to old jar        0
-        String newJar;//way to new jar        1
-        //process name to kill                2
-        //kill after [seconds]                3
+    public static void main(String[] args) throws IOException, InterruptedException {
+        Config configFile = new Config();
+        Map<String,List<String>> config = null;
+
         switch (args[0]){
             case "help":
-                System.out.println("here will be help");
+                System.out.println("here will be help or documentation url");
+                System.exit(0);
                 break;
             default:
-                oldJar = args[0];
+                config = configFile.get(args[0]);
         }
-        if (args.length>1) {
-            String processNameToKill = args[2];//
-            int killAfter = Integer.parseInt(args[3]);
 
-            Thread.sleep(killAfter * 1000);
+        if (args.length>1) {
+            String toKill = args[2];
+            int delay = Integer.parseInt(config.get("com.github.fedorchuck.appupdate.delay:").get(0));
+
+            Thread.sleep(delay);
 
             IProcessDestroyer destroy;
             if (System.getProperty("os.name").toLowerCase().contains("windows")) {
@@ -49,8 +60,24 @@ public class Main {
             } else {
                 destroy = new LinuxProcessDestroyer();
             }
-
-            destroy.killByIdList(destroy.getProcessIdentifierList(processNameToKill));
+            if (Utils.isItString(toKill))
+                destroy.killByIdList(destroy.getProcessIdentifierList(toKill));
+            else
+                destroy.killById(Integer.parseInt(toKill));
         }
+
+        Server server = new Server();
+        Response response = server.get(config.get("com.github.fedorchuck.appupdate.serverUrl:").get(0));
+        if (server.validate(response))
+            server.download(response.getUrlToUpdate());
+        else
+            log.write("Bad data url.", FATAL);
+
+        Data data = new Data();
+        data.doBackup();
+        data.install();
+        data.restoreBackup();
+
+
     }
 }

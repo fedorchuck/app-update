@@ -16,6 +16,8 @@
 
 package com.github.fedorchuck.appupdate;
 
+import com.github.fedorchuck.appupdate.update.Zip;
+
 public class ZipTest {
 
     public static void main(String[] args) {

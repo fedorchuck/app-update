@@ -17,10 +17,10 @@
 package com.github.fedorchuck.appupdate.log;
 
 import java.io.*;
-import java.util.Arrays;
-import java.util.Date;
+import java.util.*;
 
 import static com.github.fedorchuck.appupdate.log.Level.*;
+import static com.github.fedorchuck.appupdate.Variables.LOG;
 
 public class Log {
     private Class aClass;
@@ -55,9 +55,17 @@ public class Log {
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     private void write(String content, File file) {
-
         try {
-            System.out.println(file.getCanonicalPath());
+            if (LOG==null)
+                LOG = new ArrayList<>();
+            if (LOG.isEmpty()) {
+                LOG.add(file.getCanonicalPath());
+                System.out.println(file.getCanonicalPath());
+            }
+            if (!LOG.contains(file.getCanonicalPath())){
+                LOG.add(file.getCanonicalPath());
+                System.out.println(file.getCanonicalPath());
+            }
 
             if (!file.getParentFile().exists())
                 file.getParentFile().mkdirs();

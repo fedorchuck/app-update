@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.fedorchuck.appupdate.destroy;
+package com.github.fedorchuck.appupdate.process.destroy;
 
 import java.io.IOException;
 import java.util.List;

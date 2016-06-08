@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.fedorchuck.appupdate;
+package com.github.fedorchuck.appupdate.update;
 
 import com.github.fedorchuck.appupdate.log.Log;
 
@@ -39,7 +39,6 @@ public class Folder {
                 return new File(current, name).isDirectory();
             }
         });
-//        System.out.println(Arrays.toString(directories));
         return Arrays.asList(directories);
     }
 

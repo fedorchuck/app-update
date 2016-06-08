@@ -16,9 +16,10 @@
 
 package com.github.fedorchuck.appupdate;
 
-import com.github.fedorchuck.appupdate.destroy.IProcessDestroyer;
-import com.github.fedorchuck.appupdate.destroy.impl.LinuxProcessDestroyer;
-import com.github.fedorchuck.appupdate.destroy.impl.WindowsProcessDestroyer;
+import com.github.fedorchuck.appupdate.process.destroy.IProcessDestroyer;
+import com.github.fedorchuck.appupdate.process.destroy.impl.LinuxProcessDestroyer;
+import com.github.fedorchuck.appupdate.process.destroy.impl.WindowsProcessDestroyer;
+import com.github.fedorchuck.appupdate.process.Execute;
 import org.junit.Test;
 
 import java.io.IOException;

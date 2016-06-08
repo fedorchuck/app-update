@@ -17,8 +17,10 @@
 package com.github.fedorchuck.appupdate;
 
 import java.io.File;
+import java.util.List;
 
 public class Variables {
+    public static List<String> LOG;
     public static final String DOWNLOAD_DIRECTORY = new File(new File("").getAbsolutePath()).getParentFile().getAbsolutePath()+File.separator+"tmp"+File.separator;
 
 }

@@ -16,16 +16,14 @@
 
 package com.github.fedorchuck.appupdate.network;
 
+import com.github.fedorchuck.appupdate.update.Folder;
 import com.github.fedorchuck.appupdate.log.Log;
 import com.github.fedorchuck.appupdate.model.Response;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
 import java.io.*;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
-import java.net.URLConnection;
+import java.net.*;
 
 import static com.github.fedorchuck.appupdate.Variables.DOWNLOAD_DIRECTORY;
 import static com.github.fedorchuck.appupdate.log.Level.*;
@@ -83,6 +81,10 @@ public class Server {
             if (!destDir.exists()) {
                 //noinspection ResultOfMethodCallIgnored
                 destDir.mkdir();
+            } else {
+                Folder.delete(DOWNLOAD_DIRECTORY);
+                //noinspection ResultOfMethodCallIgnored
+                destDir.mkdir();
             }
 
             is = urlCon.getInputStream();
@@ -113,5 +115,23 @@ public class Server {
             } catch (IOException ignored) {}
         }
 
+    }
+
+    public boolean validate(Response response) {
+        URL url;
+
+        try {
+            url = new URL(response.getUrlToUpdate());
+        } catch (MalformedURLException e) {
+            return false;
+        }
+
+        try {
+            url.toURI();
+        } catch (URISyntaxException e) {
+            return false;
+        }
+
+        return true;
     }
 }

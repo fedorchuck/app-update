@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.fedorchuck.appupdate.config;
+package com.github.fedorchuck.appupdate.settings;
 
 import org.junit.Assert;
 import org.junit.Test;

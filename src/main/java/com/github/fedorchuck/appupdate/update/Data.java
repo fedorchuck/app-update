@@ -14,24 +14,20 @@
  * limitations under the License.
  */
 
-package com.github.fedorchuck.appupdate;
+package com.github.fedorchuck.appupdate.update;
 
-import com.github.fedorchuck.appupdate.update.Folder;
-import org.junit.Assert;
-import org.junit.Test;
+public class Data {
 
-import java.io.File;
-import java.util.Arrays;
-import java.util.List;
+    public void doBackup() {
 
-
-public class FolderTest {
-
-    @Test
-    public void getSubDir() {
-        List<String> expected = Arrays.asList("build", "gradle", "src", ".git", "log", ".gradle", ".idea");
-        List<String> actual = Folder.getSubDir(new File("").getAbsolutePath());
-        Assert.assertEquals(expected,actual);
     }
 
+    public void install(){
+
+    }
+
+    public void restoreBackup() {
+
+    }
 }
+

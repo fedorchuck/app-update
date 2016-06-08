@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.fedorchuck.appupdate;
+package com.github.fedorchuck.appupdate.process;
 
 import com.github.fedorchuck.appupdate.log.Log;
 

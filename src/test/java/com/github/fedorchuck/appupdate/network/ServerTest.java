@@ -16,7 +16,7 @@
 
 package com.github.fedorchuck.appupdate.network;
 
-import com.github.fedorchuck.appupdate.Folder;
+import com.github.fedorchuck.appupdate.update.Folder;
 import com.github.fedorchuck.appupdate.model.Response;
 import org.junit.*;
 
