@@ -20,6 +20,8 @@ import java.io.*;
 import java.util.Arrays;
 import java.util.Date;
 
+import static com.github.fedorchuck.appupdate.log.Level.*;
+
 public class Log {
     private Class aClass;
 
@@ -47,7 +49,7 @@ public class Log {
     private void writeFile(String content, Level level) {
         write(content,new File("log/"+level));
         write(content,new File("log/ALL"));
-        if (level == Level.FATAL)
+        if (level == FATAL)
             System.exit(1);
     }
 

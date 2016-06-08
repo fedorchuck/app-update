@@ -16,7 +16,6 @@
 
 package com.github.fedorchuck.appupdate.network;
 
-import com.github.fedorchuck.appupdate.log.Level;
 import com.github.fedorchuck.appupdate.log.Log;
 import com.github.fedorchuck.appupdate.model.Response;
 import com.google.gson.Gson;
@@ -28,14 +27,11 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLConnection;
 
+import static com.github.fedorchuck.appupdate.Variables.DOWNLOAD_DIRECTORY;
+import static com.github.fedorchuck.appupdate.log.Level.*;
+
 public class Server {
     private Log log = new Log(this.getClass());
-
-    private String downloadDirectory = new File(new File("").getAbsolutePath()).getParentFile().getAbsolutePath()+File.separator+"tmp"+File.separator;
-
-    public String getDownloadDirectory() {
-        return downloadDirectory;
-    }
 
     /**
      * @param url to server, example
@@ -43,7 +39,7 @@ public class Server {
      * @return {@link Response} from server.
      */
     public Response get(String url) {
-        log.write("ask server: " + url,Level.INFO);
+        log.write("ask server: " + url,INFO);
 
         HttpClient httpClient = new HttpClient();
         Gson gson = new Gson();
@@ -55,23 +51,23 @@ public class Server {
             BufferedReader br = new BufferedReader(data);
             response = gson.fromJson(br, Response.class);
         } catch (ProtocolException e) {
-            log.write(e, Level.ERROR);
+            log.write(e, ERROR);
         } catch (MalformedURLException e) {
-            log.write(e, Level.ERROR);
+            log.write(e, ERROR);
         } catch (IOException e) {
-            log.write(e, Level.ERROR);
+            log.write(e, ERROR);
         } catch (IllegalStateException e) {
-            log.write(e, Level.ERROR);
+            log.write(e, ERROR);
         } catch (JsonSyntaxException e) {
-            log.write(e, Level.ERROR);
+            log.write(e, ERROR);
             response = new Response("","","","check url","doc url");
         }
         return response;
     }
 
     public void download(String zipUrl){
-        log.write("Start download new dis. from: "+zipUrl,Level.INFO);
-        log.write("Destination directory: "+downloadDirectory,Level.INFO);
+        log.write("Start download new dis. from: "+zipUrl,INFO);
+        log.write("Destination directory: "+ DOWNLOAD_DIRECTORY,INFO);
 
         InputStream is = null;
         FileOutputStream fos = null;
@@ -81,16 +77,16 @@ public class Server {
             URLConnection urlCon = url.openConnection();
 
             System.out.println(urlCon.getContentType());
-            log.write("content type: "+urlCon.getContentType(),Level.INFO);
+            log.write("content type: "+urlCon.getContentType(),INFO);
 
-            File destDir = new File(downloadDirectory);
+            File destDir = new File(DOWNLOAD_DIRECTORY);
             if (!destDir.exists()) {
                 //noinspection ResultOfMethodCallIgnored
                 destDir.mkdir();
             }
 
             is = urlCon.getInputStream();
-            fos = new FileOutputStream(downloadDirectory+"newDist.zip");
+            fos = new FileOutputStream(DOWNLOAD_DIRECTORY +"newDist.zip");
 
             byte[] buffer = new byte[1000];
             int bytesRead = is.read(buffer);
@@ -101,11 +97,11 @@ public class Server {
             }
 
         } catch (FileNotFoundException e) {
-            log.write(e,Level.ERROR);
+            log.write(e,ERROR);
         } catch (IOException e) {
-            log.write(e,Level.ERROR);
+            log.write(e,ERROR);
             //TODO: delete destDir
-            log.write(e,Level.FATAL);
+            log.write(e,FATAL);
         } finally {
             try {
                 if (is != null) {

@@ -18,11 +18,12 @@ package com.github.fedorchuck.appupdate.destroy.impl;
 
 import com.github.fedorchuck.appupdate.destroy.IProcessDestroyer;
 import com.github.fedorchuck.appupdate.destroy.Utils;
-import com.github.fedorchuck.appupdate.log.Level;
 import com.github.fedorchuck.appupdate.log.Log;
 
 import java.io.IOException;
 import java.util.List;
+
+import static com.github.fedorchuck.appupdate.log.Level.*;
 
 public class LinuxProcessDestroyer implements IProcessDestroyer {
     private Runtime rt = Runtime.getRuntime();
@@ -36,7 +37,7 @@ public class LinuxProcessDestroyer implements IProcessDestroyer {
 
     @Override
     public List<Integer> getProcessIdentifierList(String processNameToKill) throws IOException {
-        log.write("try get list process with name: " + processNameToKill, Level.INFO);
+        log.write("try get list process with name: " + processNameToKill, INFO);
 
         Process process = rt.exec("ps -e");
 
@@ -45,7 +46,7 @@ public class LinuxProcessDestroyer implements IProcessDestroyer {
 
     @Override
     public void killById(int pid) throws IOException {
-        log.write("try to kill process: " + pid, Level.INFO);
+        log.write("try to kill process: " + pid, INFO);
         rt.exec("kill -9 " + pid);
     }
 }

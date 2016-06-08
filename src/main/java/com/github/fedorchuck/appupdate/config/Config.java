@@ -16,7 +16,6 @@
 
 package com.github.fedorchuck.appupdate.config;
 
-import com.github.fedorchuck.appupdate.log.Level;
 import com.github.fedorchuck.appupdate.log.Log;
 
 import java.io.BufferedReader;
@@ -25,20 +24,22 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
+import static com.github.fedorchuck.appupdate.log.Level.*;
+
 public class Config {
     private Log log = new Log(this.getClass());
 
     public Map<String,List<String>> get(String path) {
-        log.write("start reading config: " + path, Level.INFO);
+        log.write("start reading config: " + path, INFO);
 
         List<String> sheet = null;
         try {
             sheet = readFile(path);
         } catch (FileNotFoundException e) {
-            log.write(e,"config not found.",Level.FATAL);
+            log.write(e,"config not found.",FATAL);
         } catch (IOException e) {
             e.printStackTrace();
-            log.write(e,"problem with reading config file.",Level.FATAL);
+            log.write(e,"problem with reading config file.",FATAL);
         }
 
         Map<String,List<String>> res = new HashMap<>();
@@ -81,14 +82,14 @@ public class Config {
                 res.put(key,value);
         }
 
-        log.write("config was received: " + path, Level.INFO);
+        log.write("config was received: " + path, INFO);
         return res;
     }
 
     @SuppressWarnings("DuplicateThrows")
     private List<String> readFile(String path) throws FileNotFoundException, IOException {
         if (path==null)
-            log.write("config can't be null",Level.FATAL);
+            log.write("config can't be null",FATAL);
 
         //noinspection ConstantConditions
         BufferedReader br = new BufferedReader(new FileReader(path));

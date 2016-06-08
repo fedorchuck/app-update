@@ -16,33 +16,9 @@
 
 package com.github.fedorchuck.appupdate;
 
-import com.github.fedorchuck.appupdate.log.Log;
-import org.junit.Test;
+import java.io.File;
 
-import java.io.IOException;
-
-import static com.github.fedorchuck.appupdate.log.Level.*;
-import static org.junit.Assert.*;
-
-public class LogTest {
-    private Log log = new Log(LogTest.class);
-
-    @Test
-    public void test01() {
-        try {
-            log.write(new IOException(), INFO);
-        } catch (Throwable e) {
-            fail();
-        }
-    }
-
-    @Test
-    public void test02() {
-        try {
-            log.write(new IOException(),"test", DEBUG);
-        } catch (Throwable e) {
-            fail();
-        }
-    }
+public class Variables {
+    public static final String DOWNLOAD_DIRECTORY = new File(new File("").getAbsolutePath()).getParentFile().getAbsolutePath()+File.separator+"tmp"+File.separator;
 
 }

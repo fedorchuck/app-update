@@ -16,18 +16,19 @@
 
 package com.github.fedorchuck.appupdate;
 
-import com.github.fedorchuck.appupdate.log.Level;
 import com.github.fedorchuck.appupdate.log.Log;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import static com.github.fedorchuck.appupdate.log.Level.*;
+
 public class Execute {
     private Log log = new Log(this.getClass());
 
     public void command(String command) {
-        log.write("try to execute: "+command,Level.INFO);
+        log.write("try to execute: "+command,INFO);
         StringBuilder output = new StringBuilder();
 
         Process p;
@@ -43,10 +44,10 @@ public class Execute {
                 output.append(line).append("\n");
             }
 
-            log.write(output.toString(),Level.INFO);
+            log.write(output.toString(),INFO);
         } catch (InterruptedException |
                 IOException e) {
-            log.write(e, Level.FATAL);
+            log.write(e, FATAL);
         }
     }
 }

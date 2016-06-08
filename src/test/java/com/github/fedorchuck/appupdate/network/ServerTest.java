@@ -16,18 +16,21 @@
 
 package com.github.fedorchuck.appupdate.network;
 
+import com.github.fedorchuck.appupdate.Folder;
 import com.github.fedorchuck.appupdate.model.Response;
 import org.junit.*;
 
 import java.io.File;
+
+import static com.github.fedorchuck.appupdate.Variables.DOWNLOAD_DIRECTORY;
 
 public class ServerTest {
     private static Server server = new Server();
 
     @BeforeClass
     public static void before(){
-        File trash = new File(server.getDownloadDirectory());
-        trash.delete();
+        File trash = new File(DOWNLOAD_DIRECTORY);
+        trash.deleteOnExit();
     }
 
     @Test
@@ -45,7 +48,7 @@ public class ServerTest {
 
     @Test
     public void download() {
-        File actual = new File(server.getDownloadDirectory()+"newDist.zip");
+        File actual = new File(DOWNLOAD_DIRECTORY +"newDist.zip");
         if (actual.exists())
             //noinspection ResultOfMethodCallIgnored
             actual.delete();
@@ -60,7 +63,7 @@ public class ServerTest {
 
     @Test
     public void completeServerTest() {
-        File actual = new File(server.getDownloadDirectory()+"newDist.zip");
+        File actual = new File(DOWNLOAD_DIRECTORY +"newDist.zip");
         if (actual.exists())
             //noinspection ResultOfMethodCallIgnored
             actual.delete();
@@ -77,9 +80,9 @@ public class ServerTest {
 
     @AfterClass
     public static void tearDown(){
-        File trash = new File(server.getDownloadDirectory()+"newDist.zip");
+        File trash = new File(DOWNLOAD_DIRECTORY +"newDist.zip");
         trash.deleteOnExit();
-        trash = new File(server.getDownloadDirectory());
-        trash.delete();
+        trash = new File(DOWNLOAD_DIRECTORY);
+        Folder.delete(trash);
     }
 }

@@ -16,13 +16,21 @@
 
 package com.github.fedorchuck.appupdate;
 
+import com.github.fedorchuck.appupdate.log.Log;
+
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.Arrays;
 import java.util.List;
 
-public class Folder {
+import static com.github.fedorchuck.appupdate.log.Level.*;
 
+public class Folder {
+    private static Log log = new Log(Folder.class);
+
+    /**
+     * @return {@code list} with <b>JUST</b> names sub folders.
+     * */
     public static List<String> getSubDir(String path){
         File file = new File(path);
         String[] directories = file.list(new FilenameFilter() {
@@ -35,6 +43,24 @@ public class Folder {
         return Arrays.asList(directories);
     }
 
+    public static void delete(String path){
+        File thrash = new File(path);
+        delete(thrash);
+    }
+
+    public static void delete(File thrash){
+        if (thrash.isDirectory())
+            //noinspection ConstantConditions
+            for (File subTrash : thrash.listFiles())
+                delete(subTrash);
+        else
+            //noinspection ResultOfMethodCallIgnored
+            thrash.delete();
+        if (!thrash.delete())
+            log.write("Failed to delete : " + thrash,FATAL);
+    }
+
+    @Deprecated
     public static void main(String[] args){
         System.out.println(getSubDir(new File("").getAbsolutePath()));
     }

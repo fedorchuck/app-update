@@ -16,19 +16,20 @@
 
 package com.github.fedorchuck.appupdate;
 
-import com.github.fedorchuck.appupdate.log.Level;
 import com.github.fedorchuck.appupdate.log.Log;
 
 import java.io.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import static com.github.fedorchuck.appupdate.log.Level.*;
+
 public class Zip {
     private Log log = new Log(this.getClass());
     private static final int BUFFER_SIZE = 4096;
 
     public void extract(String zipFilePath, String destDirectory) {
-        log.write("Try to unzip "+zipFilePath+" to "+destDirectory, Level.INFO);
+        log.write("Try to unzip "+zipFilePath+" to "+destDirectory, INFO);
 
         File destDir = new File(destDirectory);
         if (!destDir.exists()) {
@@ -55,7 +56,7 @@ public class Zip {
                 entry = zipIn.getNextEntry();
             }
         } catch (IOException e) {
-            log.write(e,"Something went wrong with unzipping. Are you sure, that it is zip?",Level.ERROR);
+            log.write(e,"Something went wrong with unzipping. Are you sure, that it is zip?",ERROR);
         } finally {
             try {
                 if (zipIn != null)
@@ -63,7 +64,7 @@ public class Zip {
             } catch (IOException ignored) {}
         }
 
-        log.write("Files was extracted successful.", Level.INFO);
+        log.write("Files was extracted successful.", INFO);
     }
 
     // Extracts a zip entry (file entry)
